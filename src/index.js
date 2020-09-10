@@ -8,4 +8,4 @@ import {Table} from '@/components/table/Table'
 const excel = new Excel('#app', {
     components: [Header, Toolbar, Formula, Table]
 })
-console.log(excel.render())
+excel.render()

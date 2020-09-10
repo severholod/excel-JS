@@ -11,6 +11,12 @@ class Dom {
         }
         return this.$el.outerHTML.trim()
     }
+    set text(text) {
+        this.$el.textContent = text
+    }
+    get text() {
+        return this.$el.textContent
+    }
     clear() {
         this.html('')
         return this
@@ -43,15 +49,35 @@ class Dom {
     }
     addClass(classes) {
         this.$el.classList.add(classes)
+        return this
     }
     removeClass(classes) {
         this.$el.classList.remove(classes)
+        return this
+    }
+    find(selector) {
+        return $(this.$el.querySelector(selector))
     }
     findAll(selector) {
         return this.$el.querySelectorAll(selector)
     }
     css(styles = {}) {
         Object.keys(styles).forEach(key => this.$el.style[key] = styles[key])
+    }
+    id(parse) {
+        if (parse) {
+            const parsed = this.id().split(':')
+            return {
+                row: +parsed[0],
+                col: +parsed[1]
+            }
+        } else {
+            return this.data.id
+        }
+    }
+    focus() {
+        this.$el.focus()
+        return this
     }
 }
 
