@@ -15,6 +15,9 @@ class Dom {
         this.$el.textContent = text
     }
     get text() {
+        if (this.$el.tagName.toLowerCase() === 'input') {
+            return this.$el.value
+        }
         return this.$el.textContent
     }
     clear() {
@@ -55,6 +58,10 @@ class Dom {
         this.$el.classList.remove(classes)
         return this
     }
+    toggleClass(classes) {
+        console.log(this.$el.classList)
+        this.$el.classList.contains(classes) ? this.removeClass(classes) : this.addClass(classes)
+    }
     find(selector) {
         return $(this.$el.querySelector(selector))
     }
@@ -75,13 +82,24 @@ class Dom {
             return this.data.id
         }
     }
+    attr(name, value) {
+        if (value !== undefined) {
+            this.$el.setAttribute(name, value)
+            return this
+        }
+        return this.$el.getAttribute(name)
+    }
     focus() {
         this.$el.focus()
         return this
     }
+    getStyles(styles = []) {
+        return styles.reduce((res, s) => {
+            res[s] = this.$el.style[s]
+            return res
+        }, {})
+    }
 }
-
-$('div').html('<h1>test</h1>').clear()
 
 export function $(selector) {
     return new Dom(selector)
